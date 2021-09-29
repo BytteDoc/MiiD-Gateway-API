@@ -106,7 +106,7 @@ Response fields:
 * **processUrl** = Is the Url to redirect your application or system to MiiD Authentication process.
 
 Url - GenetateProcessToken - GET
-> https://services.miid.bio/Gateway/{TokenID}/
+> https://services.miid.bio/Gateway/GetByTokenValue/{TokenID}/
 
 Example Json
 ```sh
@@ -174,7 +174,7 @@ Response fields:
 * **statusProcess** = General Process Status (True = User Authenticated)
 * **inProcess** =If True, the process has not finished and you must wait for this flag to change to false 
 
-Url - GenetateProcessToken - GET
+Url - GetResultByExternalIdProcess - GET
 > https://services.miid.bio/Person/GetResultByExternalIdProcess/{TokenID}/
 
 Example Json
