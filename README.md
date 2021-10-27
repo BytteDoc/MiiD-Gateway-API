@@ -10,7 +10,8 @@
  - [Genetate Process Token](#ApiGarewayNewToken).
  - [Get Token By Value](#ApiGarewayGetTokenByValue).
  - [GetResultByExternalIdProcess](#ApiGarewayGetResultByExternalIdProcess).
- 
+ - [Enroll Person Gateway](#ApiGarewayEnrollPersonGateway).
+
 **MiiD Gateway**  is a commercial Service, to use it contact info@bytte.com.co for instructions on how to obtain the required resources and access
 
 **MiiD** is a trademark registered by Bytte S.A.S 
@@ -216,6 +217,121 @@ Response:
     "statusProcess": true,
     "statusReturn": "SUCCESS",
     "inProcess": false
+}
+```
+
+-------
+-------
+---
+## <a name="ApiGarewayEnrollPersonGateway"></a>Enroll Person Gateway
+This operation process biometric information in backend server
+
+* Some values will be obtained from **GetByTokenValue** or **GetByTokenNumber** service
+
+  Response example
+
+
+```json
+{
+    "id": "c97e826f-bb03-4d8a-81b7-523c3c4ad780",
+    "enterpriseClientId": 0,
+    "creationDate": "2021-10-26T16:52:23.297",
+    "tokenValue": "$@@STEzcTSkhxTTRtRHh2ZUpIYWVyVlJudkhYVDhQbzBCbzkwMEE9",
+    "externalId": "aaA11234",
+    "documentType": "1",
+    "documentNumber": "80208223",
+    "returnUrl": "http://localhost/testweb/",
+    "processUrl": "http://localhost:3000/$@@STEzc2YvcDZxVlBIcFJ1b0VWeTVnaEd5UjVremdnM0pZMUwzbng2UnE2RWMzZ3JiQnN5WEVZakpmQXlqUzR4SGRtQzQrZDhoc2FTSkhxTTRtRHh2ZUpIYWVyVlJudkhYVDhQbzBCbzkwMEE9",
+    "tokenQRImage": "",
+    "tokenQRNumber": "91506",
+    "tokenIsB2C": true,
+    "tokenValid": false,
+    "telephoheNumber": "3016336165",
+    "email": "allan.diaz@bytte.com.co"
+}
+```
+
+Variables to Send:
+* **TokenId** = Is a Token Value previously generated
+
+Body Type
+* **Form/Data**
+
+Form Variables
+
+* **face** : Binary file with a face selfie capture
+* **fingerX** : Binary file with a fingerprint data capture
+  X value can be from 1 to 10 or 20-21
+  
+  A record is generated for each fingerprint 
+  
+* **barcodebase64**: barcode PDF417 encoded string
+* **emailaddress** : email Address from QR or interface captured
+* **externalid** : External Identifier From QR code
+* **documentbackimage** :  Binary file with a back document capture
+* **documentfrontimage** :  Binary file with a front document capture
+* **EnterpriseClientId** : Enterprise client value from QR code
+* **Source** : Constant value **WEBGATEWAY**
+* **Tokenid** : tokenValue from QR code
+
+Call Example
+```console
+curl --location --request POST 'https://servicesdev.miid.bio/Person/EnrollPersonGateway' \
+--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsifQ.eyJpc3MiOiJodHRwczovL21paWR1c2Vycy5iMmNsb2dpbi5jb20vYmNlNzJjY2UtNGE2MC00MDNhLTlhODItMjVjNjljZWZiYTY5L3YyLjAvIiwiZXhwIjoxNjM1Mjk2ODU1LCJuYmYiOjE2MzUyOTMyNTUsImF1ZCI6IjViZmE0ZDdlLTc2MDUtNGU5Zi1iMDU5LWZiN2Y5NTYzM2M5ZiIsImlkcCI6IkxvY2FsQWNjb3VudCIsIm9pZCI6ImQ1MWUwZjU3LWFhMGItNDlmOC04ZDg4LWY4YzVhNzk3ZGI5YyIsInN1YiI6ImQ1MWUwZjU3LWFhMGItNDlmOC04ZDg4LWY4YzVhNzk3ZGI5YyIsImdpdmVuX25hbWUiOiJhcHB1c2VyIiwibmFtZSI6ImFwcHVzZXIiLCJuZXdVc2VyIjpmYWxzZSwidGZwIjoiQjJDXzFfTWlpRF9ST1BDX0F1dGgiLCJhenAiOiI1YmZhNGQ3ZS03NjA1LTRlOWYtYjA1OS1mYjdmOTU2MzNjOWYiLCJ2ZXIiOiIxLjAiLCJpYXQiOjE2MzUyOTMyNTV9.BV6VPpU3Y-wPoBRbVKQMOZ5XDyEVb612ODBPaA5Hw_d7UXqU9yQsTQw7-ys3osOuiw0FHEGnIlZPn7rbIN-bXHpM0WvwbeelhnEUN1V4UtpnRcsKsv0LYmQFWbLOkRQTxgaSPAtnszZIuBNWlvrXF23Gm-gOql3jQzY9YoW2OCp6vtI4XATr5an3lZgUe-50jI7lPNokdwonScebD02kqUeJlE0JqUdaNPU9qaP3kJJSn57y-I4ecKqO2E9CUwqDUUQTgNJdexD_4Z1g5aEgrErnAV2n_5cwGZUwn3tRzYBoxwbchlnH_TbAWIb0_ucW8mcoQF9of5lzX7Be6o18HA' \
+--form 'face=@"//imgSelfie.jpg"' \
+--form 'finger3=@"//insHuella2.jpg"' \
+--form 'finger4=@"//insHuella3.jpg"' \
+--form 'finger5=@"//insHuella4.jpg"' \
+--form 'finger2=@"//insHuella1.jpg"' \
+--form 'finger21=@"//insHuella21.jpg"' \
+--form 'barcodebase64="MDIwMTYyOTAxMTcxQSAgICAgICAgIDAxOTU1NjU3MTQ0ICAgICAgIDA5OTQyNzE3MDA4MDIwODIyM0RJQVogICAgICAgICAgICAgICAgICAgQkFMTEVTVEVST1MgICAgICAgICAgICBBTExBTiAgICAgICAgICAgICAgICAgIFlFSVNTT04gICAgICAgICAgICAgICAgME0xOTgyMTEyOTAxNTAwMUIrIDKxuXhnb3RyfHiIlXOVan6QnmdkioiVWXSUVKR6V3eYUKhhY5dVX3Sjc0Ovfq6FZ6FUkkxhq1agnmFFWZ5zPEaCslm3gEWIVUZMTm2vVEN/NEOMaDa5jUWTPmWUM4S2jS9Hnoy4pa97ulc2xGBESK6ujL9XMDbdObz27PmJKVvq7QAAAlMwQuDNAA/w7VJXOxffA/kxMkbGBcNKPL+VbOpRN7G5do6IcHppZXhtl1+Fj5SXbZqRc6OOn11llWKidnuoXJyXnlB7cqmBVKNvYlplVV6kUJJLe6mEiFCrcX1NWqmsjk+eoliLST91tYJeSZa1WbNMVrVqt3M8hT9jTa6RQo0+VbqmSD9ZvWiKxTlem8BDUDJ860w589ZVW+YbSzAAWECRTB+BDIUQTbETEPTOS8vl7RwKYFRVkOZRr4t6PvPL71bVvsxGS2DhxAcTxyp2GYq/KM5Ahy+WD7rExXOIaaH9pGh0EZVi"' \
+--form 'emailaddress="allan.diaz@bytte.com.co"' \
+--form 'externalid="11223344-111123-2003"' \
+--form 'documentbackimage=@"//reversoCO.jpg"' \
+--form 'documentfrontimage=@"//frenteCO.png"' \
+--form 'EnterpriseClientId="0"' \
+--form 'Source="WEBGATEWAY"' \
+--form 'tokenid="22233-332342--2322"'
+```
+
+---
+**Response Information**:
+
+
+Response – Status 200: User authenticated and enrolled
+```json
+{
+    "id": "a12f8bb1-3518-46b3-8b14-01c3d71b392d",
+     … (other values)
+    "statusProcess": true,
+    "statusReturn": "SUCCESS"
+}
+```
+
+Response – Status 200: User with error and enrolled
+```json
+{
+    "id": "a12f8bb1-3518-46b3-8b14-01c3d71b392d",
+     … (other values)
+    "statusProcess": false,
+    "statusReturn": "NO_ENROLL"
+}
+```
+
+Response – Status 200: User – this will be answer other questions (another functional flow named Listas restrictivas)
+```json
+{
+    "id": "a12f8bb1-3518-46b3-8b14-01c3d71b392d",
+     … (other values)
+    "statusProcess": false,
+    "statusReturn": "LISTAS"
+}
+``` 
+
+Response – Status 401:
+```json
+{
+  "Message": "Authorization has been denied for this request."
 }
 ```
 
