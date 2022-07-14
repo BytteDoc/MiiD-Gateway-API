@@ -52,6 +52,8 @@ Variables to Send:
 * **documentType** = Is a document type from user to authenticate 
 * **documentNumber** = Is a document number from user to authenticate
 * **returnUrl** = Is a URL/URI. When MiiD Process Ends, MiiD system redirect to this Url to continue the client process
+* **IsOperator** = Is a boolean value. if true, the user's document number entered will be processed as the operator of the business client sent in the **enterpriseClientId** field
+
 
 Url - GenetateProcessToken - POST
 > https://services.miid.bio/Gateway/GenetateProcessToken/
@@ -68,7 +70,8 @@ Body
   "externalId": "aaA11234",
   "documentType": "1",
   "documentNumber": "1234567890",
-  "returnUrl": "http://clientdomain/clientsite/"
+  "returnUrl": "http://clientdomain/clientsite/",
+  "isOperator" : false
 }
 ```
 ```json
@@ -126,7 +129,9 @@ Response:
     "documentType": "1",
     "documentNumber": "1234567890",
     "returnUrl": "http://clientdomain/clientsite/",
-    "processUrl": "http://miid.gateway.bio/w/028092021135547637684341479019124"
+    "processUrl": "http://miid.gateway.bio/w/028092021135547637684341479019124",
+    "isOperator" : false
+
 }
 ```
 ---
