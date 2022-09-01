@@ -10,6 +10,7 @@
  - [Genetate Process Token](#ApiGarewayNewToken).
  - [Get Token By Value](#ApiGarewayGetTokenByValue).
  - [GetResultByExternalIdProcess](#ApiGarewayGetResultByExternalIdProcess).
+ - [GetImagesResultByExternalIdProcess](#ApiGarewayGetImagesResultByExternalIdProcess)
  - [Enroll Person Gateway](#ApiGarewayEnrollPersonGateway).
 
 **MiiD Gateway**  is a commercial Service, to use it contact info@bytte.com.co for instructions on how to obtain the required resources and access
@@ -140,7 +141,8 @@ This operation returns detailed information from a Authentication process
 
 Variables to Send:
 
-* **TokenId** = Is a Token Value previously generated
+* **TokenBearer** = Is a Token Value previously generated
+* **ExternalId** = Is a External Identificator (client transaction identificator)
 
 Response fields:
 * **enterpriseClientId** = Is a Identifier provided by MiiD Team. This Identifier is unique by client 
@@ -181,7 +183,7 @@ Response fields:
 * **inProcess** =If True, the process has not finished and you must wait for this flag to change to false 
 
 Url - GetResultByExternalIdProcess - GET
-> https://services.miid.bio/Person/GetResultByExternalIdProcess/{TokenID}/
+> https://services.miid.bio/Person/GetResultByExternalIdProcess/{ExternalId}/
 
 Example Json
 ```sh
@@ -224,10 +226,53 @@ Response:
     "inProcess": false
 }
 ```
-
 -------
 -------
 ---
+
+## <a name="ApiGarewayGetImagesResultByExternalIdProcess"></a>Get Image Result By External IdProcess
+This operation returns (if exists) documents images used in a Authentication process
+
+Variables to Send:
+
+* **TokenBearer** = Is a Token Value previously generated
+* **ExternalId** = Is a External Identificator (client transaction identificator)
+
+Response fields:
+* **Log Document Array Object**
+  * for each item:
+  * **id** = Is a internal Identifier 
+  * **type** = Enum Value  (int)
+    * 1 - Front Document
+    * 2 - Back Document 
+  * **documentBase64** = Image in base64 encoding
+
+Url - GetImagesResultByExternalIdProcess - GET
+> https://services.miid.bio/Person/GetImagesResultByExternalIdProcess/{ExternalId}/
+
+Example Json
+```sh
+--header Authorization": Bearer eyJ0eXAi......."
+```
+Body: Empty
+
+```json
+Response:
+[
+    {
+        "id": "35f253ac-3c35-40ed-ab89-349ddbd16401",
+        "type": 1,
+        "documentBase64": "/9j/4AAQSkZJRgABAQAAS...."
+    },
+    {
+        "id": "a9d5cb57-8dc3-462a-a2d1-1a80d6fb8097",
+        "type": 2,
+        "documentBase64": "/9j/4AAQSkZJRgABAQAAS...."
+    }
+]
+```
+
+
 ## <a name="ApiGarewayEnrollPersonGateway"></a>Enroll Person Gateway
 This operation process biometric information in backend server
 
