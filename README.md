@@ -145,6 +145,18 @@ Variables to Send:
 * **ExternalId** = Is a External Identificator (client transaction identificator)
 
 Response fields:
+* **UserInfo** = Is a structure with the biographic information captured from document
+
+* **documentType** = Is a document type from user to authenticate
+* **documentNumber** = Is a document number from user to authenticate
+* **givenName** = Is a name from user to authenticate
+* **surname** = Is a surname from user to authenticate
+* **origin** = Is a origin from user to authenticate
+* **aniFirstName** = Is a name from user to authenticate (from ANI - Only from Document type CC)
+* **aniSecondName** = Is a second name from user to authenticate (from ANI - Only from Document type CC)
+* **aniFirstSurname** = Is a surname from user to authenticate (from ANI - Only from Document type CC)
+* **aniSecondSurname** = Is a second surname from user to authenticate (from ANI - Only from Document type CC)
+
 * **enterpriseClientId** = Is a Identifier provided by MiiD Team. This Identifier is unique by client 
 * **id** = MiiD Internal Identifier
 * **creationDate** = Creation Date
@@ -194,6 +206,17 @@ Body: Empty
 ```json
 Response:
 {
+    "userInfo": {    
+        "documentType": "1",
+        "documentNumber": "1010197543",
+        "givenName": "LINDA KATHERINE",
+        "surname": "LOZANO RODRIGUEZ",
+        "origin": "Aliado Offline",
+        "aniFirstName": "LINDA",
+        "aniSecondName": "KATHERINE",
+        "aniFirstSurname": "LOZANO",
+        "aniSecondSurname": "RODRIGUEZ"
+    },
     "id": "5c642638-...",
     "enterpriseClientId": 0,
     "personId": "abf7886b-4a35-4162-...",
@@ -202,7 +225,7 @@ Response:
     "externalId": "11223344-111123-2010",
     "type": "Enroll",
     "origin": "APP",
-    "barcodeMrz": "MDIwMTYyOTAxMTcxQSAgICAgICAgIDAxOTU1NjU3MTQ0ICAgICAgIDA5OTQyNzE3MDA4MDIwODIyM0RJQVogICAgICAgICAgICAgICAgICAgQkFMTEVTVEVST1MgICAgICAgICAgICBBTExBTiAgICAgICAgICAgICAgICAgIFlFSVNTT04gICAgICAgICAgICAgICAgME0xOTgyMTEyOTAxNTAwMUIrIDKxuXhnb3RyfHiIlXOVan6QnmdkioiVWXSUVKR6V3eYUKhhY5dVX3Sjc0Ovfq6FZ6FUkkxhq1agnmFFWZ5zPEaCslm3gEWIVUZMTm2vVEN/NEOMaDa5jUWTPmWUM4S2jS9Hnoy4pa97ulc2xGBESK6ujL9XMDbdObz27PmJKVvq7QAAAlMwQuDNAA/w7VJXOxffA/kxMkbGBcNKPL+VbOpRN7G5do6IcHppZXhtl1+Fj5SXbZqRc6OOn11llWKidnuoXJyXnlB7cqmBVKNvYlplVV6kUJJLe6mEiFCrcX1NWqmsjk+eoliLST91tYJeSZa1WbNMVrVqt3M8hT9jTa6RQo0+VbqmSD9ZvWiKxTlem8BDUDJ860w589ZVW+YbSzAAWECRTB+BDIUQTbETEPTOS8vl7RwKYFRVkOZRr4t6PvPL71bVvsxGS2DhxAcTxyp2GYq/KM5Ahy+WD7rExXOIaaH9pGh0EZVi",    
+    "barcodeMrz": "MDIwMTYyOTAxMTcxQSAgICAgIC...",    
     "scoreFingerBarcode": 1423,    
     "scoreFace": 76,
     "scoreLiveness": 99,
@@ -223,7 +246,9 @@ Response:
     "statusList": 1,
     "statusProcess": true,
     "statusReturn": "SUCCESS",
-    "inProcess": false
+    "inProcess": false,
+    "locked": false,
+    "lockedReason": 0
 }
 ```
 -------
