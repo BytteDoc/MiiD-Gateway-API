@@ -48,12 +48,27 @@ In your project or system, the first step is generate a new Token In this token,
 
 Variables to Send:
 
-* **enterpriseClientId** = Is a Identifier provided by MiiD Team. This Identifier is unique by client 
+* **enterpriseClientId** = Is an Identifier provided by MiiD Team. This Identifier is unique by client 
+* **enterpriseClientOperatorId** = Is an Identifier provided by MiiD Team. This Identifier is unique by client operator
+* **enterpriseClientBranchId** = Is an Identifier provided by MiiD Team. This Identifier is unique by client branch
 * **externalId** = Is a current client Identifier (in the client information system)
 * **documentType** = Is a document type from user to authenticate 
 * **documentNumber** = Is a document number from user to authenticate
 * **returnUrl** = Is a URL/URI. When MiiD Process Ends, MiiD system redirect to this Url to continue the client process
+* **tokenIsB2C** = Is a boolean value. When the process comes from a third party it must be set to 'true'
 * **IsOperator** = Is a boolean value. if true, the user's document number entered will be processed as the operator of the business client sent in the **enterpriseClientId** field
+* **TelephoheNumber** = Customer's cell phone number.
+* **Email** = Customer email address
+* **processType** = Data for internal control of MiiD Team. It should go in '1'
+* **isOperator** = Is a boolean value. Identifies if the process is carried out by a client operator, by default it is 'false'
+* **isClient** = Is a boolean value. For processes with PJ, it allows you to identify if the process is carried out for a client of the company (PJ), by default it is 'false'
+* **isDigitalDocument** = Is a boolean value. Field used to activate/deactivate the process for new digital component ID,by default it is 'false'
+* **isRelated** = Is a boolean value. For processes with PJ, it allows you to identify if the process is carried out to a 'Related' person of the company (PJ) by default it is 'false'.
+* **relatedDocumentNumber** = If the previous field (**IsRelated**) is 'true', the NIT must be sent (without verification code); Otherwise, it is sent empty.
+* **operatorMail** = operator's email address who is doing the process with the client
+* **ipAddress** = IP address of the machine from which the Token or QR generation process starts
+* **OriginTransaction** = For PJ transactions, establish the origin of the transaction, field determined by the client, otherwiseit is sent empty
+* **isBluetoothCapture** = Parameter to determine how the fingerprint capture will be done, by default send in '0'
 
 
 Url - GenetateProcessToken - POST
@@ -68,11 +83,25 @@ Body
 ```json
 {   
   "enterpriseClientId": 12,  
+  "enterpriseClientOperatorId": "1",
+  "enterpriseClientBranchId": "1",
   "externalId": "aaA11234",
   "documentType": "1",
   "documentNumber": "1234567890",
   "returnUrl": "http://clientdomain/clientsite/",
-  "isOperator" : false
+  "tokenIsB2C": true,
+  "TelephoheNumber": "123456789",
+  "Email": "miid_user@miid.com.co",
+  "processType": "1",
+  "isOperator" : false,
+  "isClient": false,
+  "isDigitalDocument": false,
+  "isRelated": false,
+  "relatedDocumentNumber": "",
+  "operatorMail": "miid_operator@miid.com.co",
+  "ipAddress": "127.0.0.0",
+  "OriginTransaction": "",
+  "isBluetoothCapture": false
 }
 ```
 ```json
@@ -80,7 +109,18 @@ Response:
 {
     "processUrl": "http://miid.gateway.bio/w/028092021135547637684341479019124",
     "tokenValue": "028092021135547637684341479019124",
-    "creationDate": "2021-09-28T13:55:47.9025853+00:00",
+    "tokenQRImage": "iVBORw0KGgoAAAANSU..........jH3QZ3azPnwubAAAAAElFTkSuQmCC",
+    "tokenQRNumber": "61267",
+    "processType": 1,
+    "creationDate": "2023-11-02T17:27:34.7186361-05:00",
+    "tokenValid": true,
+    "telephoheNumber": false,
+    "email": false,
+    "isOperator": false,
+    "isClient": false,
+    "isDigitalDocument": false,
+    "isRelated": false,
+    "isIproovCapture": false,
     "successOperation": true,
     "message": "Token generated!"
 }
@@ -241,7 +281,12 @@ Response:
     "statusOcrBarcode": 1,
     "statusAniBarcode": 1,
     "statusAniOcr": 1,
-    "statusWeigthDocument": 1,     
+    "statusWeigthDocument": 1,
+    "statusIaMicrosoft": 1,
+    "statusListFace": 1,
+    "statusNanos": 0,
+    "statusNanosDocument": 1,
+    "statusCodeCheck": 0,
     "statusBykeeper": 1,
     "statusList": 1,
     "statusProcess": true,
